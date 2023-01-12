@@ -1,14 +1,10 @@
 const Product = require("../models/Product");
 const router = require("express").Router();
-const upload = require("./multer");
-const {
-  verifyToken,
-  verifyTokenAuthorization,
-  verifyTokenAdmin,
-} = require("./verifyToken");
+const upload = require("../multer");
+const {verifyToken,verifyTokenAuthorization,verifyTokenAdmin} = require("./verifyToken");
 
 //create a new product;
-router.post("/", verifyTokenAdmin, upload("image"), async (req, res) => {
+router.post("/", verifyTokenAdmin, upload.array("image"), async (req, res) => {
   console.log(req.body);
 
   const newProduct = new Product({ ...req.body, image: req.body.file });
